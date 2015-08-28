@@ -200,6 +200,8 @@ public class Main
 				}
 				
 				if (sentenceContainsExclusion) continue;
+				
+				break;
 			}
 			
 			if (sentence==null || x>=maxTweetGenerationAttempts)
