@@ -34,6 +34,7 @@ public class Main
 		String sentence, sentenceLower;
 		long randomTime;
 		Date date = new Date();
+		BufferedReader br = null;
 		
 		while (true)
 		{
@@ -77,22 +78,44 @@ public class Main
 			}
 			
 			ArrayList<String> interests = new ArrayList<String>();
-			interests.add("Bitcoin");
-			interests.add("#netsec");
-			interests.add("@SwiftOnSecurity");
-			interests.add("#gamedev");
-			interests.add("@DivineOmega");
-			interests.add("@ojdon");
-			interests.add("@KirstyGasston");
-			interests.add("@timlees11");
-			interests.add("@peterchiuy");
-			interests.add("#webdev");
-			interests.add("PHP");
-			interests.add("Mario Maker");
-			interests.add("Star Trek");
-			interests.add("#staffswebmeetup");
-			interests.add("#Humans");
-			interests.add("#homeautomation");
+			
+			try 
+			{
+
+				String currentLine;
+
+				br = new BufferedReader(new FileReader("interests.txt"));
+
+				while ((currentLine = br.readLine()) != null) 
+				{
+					currentLine = currentLine.trim();
+					
+					if (!currentLine.isEmpty())
+					{
+						interests.add(currentLine);
+					}
+				}
+
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			} 
+			finally 
+			{
+				try 
+				{
+					if (br != null)
+					{
+						br.close();
+					}
+				} 
+				catch (IOException ex) 
+				{
+					ex.printStackTrace();
+				}
+			}
+			
 			
 			for (String interest : interests) 
 			{
@@ -115,8 +138,6 @@ public class Main
 			
 			ArrayList<String> exclusions = new ArrayList<String>();
 			
-			BufferedReader br = null;
-
 			try 
 			{
 
