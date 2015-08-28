@@ -1,3 +1,6 @@
+# Prevent Twitter API credentials being versioned
+twitter4j.properties
+
 # Java
 *.class
 
