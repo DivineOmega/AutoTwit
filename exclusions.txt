@@ -1,0 +1,11 @@
+rip
+bomb
+explo
+terror
+die
+death
+dead
+hostage
+attack
+kill
+innocent

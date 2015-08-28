@@ -1,5 +1,8 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -109,6 +112,47 @@ public class Main
 			
 			System.out.println();
 			
+			ArrayList<String> exclusions = new ArrayList<String>();
+			
+			BufferedReader br = null;
+
+			try 
+			{
+
+				String currentLine;
+
+				br = new BufferedReader(new FileReader("exclusions.txt"));
+
+				while ((currentLine = br.readLine()) != null) 
+				{
+					currentLine = currentLine.trim();
+					
+					if (!currentLine.isEmpty())
+					{
+						exclusions.add(currentLine);
+					}
+				}
+
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			} 
+			finally 
+			{
+				try 
+				{
+					if (br != null)
+					{
+						br.close();
+					}
+				} 
+				catch (IOException ex) 
+				{
+					ex.printStackTrace();
+				}
+			}
+			
 			x = 0;
 			sentence = null;
 			while (x<1000)
@@ -117,11 +161,21 @@ public class Main
 				
 				sentenceLower = sentence.toLowerCase();
 				
-				if (allTweets.contains(sentence) || sentence.length()>140
-					|| sentenceLower.contains("rip") || sentenceLower.contains("bomb") || sentenceLower.contains("explo") || sentenceLower.contains("terror")
-					|| sentenceLower.contains("die") || sentenceLower.contains("death") || sentenceLower.contains("dead") || sentenceLower.contains("…")
-					|| sentenceLower.contains("hostage") || sentenceLower.contains("attack") || sentenceLower.contains("kill") || sentenceLower.contains("innocent")
-					|| sentenceLower.contains("\r") || sentenceLower.contains("\n")) continue;
+				if (allTweets.contains(sentence) || sentence.length()>140 || sentenceLower.contains("…") || sentenceLower.contains("\r") || sentenceLower.contains("\n")) continue;
+
+				boolean sentenceContainsExclusion = false; 
+				
+				for (String exclusion : exclusions) 
+				{
+					if (sentenceLower.contains(exclusion.toLowerCase()))
+					{
+						sentenceContainsExclusion = true;
+						break;
+					}
+				}
+				
+				if (sentenceContainsExclusion) continue;
+				
 				x++;
 				break;
 			}
