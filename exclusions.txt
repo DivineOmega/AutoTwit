@@ -9,3 +9,8 @@ hostage
 attack
 kill
 innocent
+blow
+destroy
+rape
+murder
+shoot
