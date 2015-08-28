@@ -30,6 +30,7 @@ public class Main
 	{
 		Trends trendsResponses = null;
 		int x;
+		int maxTweetGenerationAttempts = 10000;
 		String sentence, sentenceLower;
 		long randomTime;
 		Date date = new Date();
@@ -155,8 +156,11 @@ public class Main
 			
 			x = 0;
 			sentence = null;
-			while (x<1000)
+			
+			while (x<maxTweetGenerationAttempts)
 			{
+				x++;
+			
 				sentence = megahal.getSentence();
 				
 				sentenceLower = sentence.toLowerCase();
@@ -175,14 +179,11 @@ public class Main
 				}
 				
 				if (sentenceContainsExclusion) continue;
-				
-				x++;
-				break;
 			}
 			
-			if (sentence==null)
+			if (sentence==null || x>=maxTweetGenerationAttempts)
 			{
-				System.out.println("No tweet could be generated.");
+				System.out.println("No tweet could be generated. Perhaps your exclusions list is too restrictive.");
 			}
 			else
 			{
