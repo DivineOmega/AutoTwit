@@ -29,6 +29,7 @@ public class Main
 	
 	private static boolean learnFromTrends = true;
 	private static int trendsWOEID = 1;
+	private static int maxDelayBetweenTweetingMinutes = 120;
 
 	public static void main(String[] args)
 	{
@@ -54,6 +55,7 @@ public class Main
 
 				learnFromTrends = (prop.getProperty("learnFromTrends").equalsIgnoreCase("true"));
 				trendsWOEID = Integer.parseInt(prop.getProperty("trendsWOEID"));
+				maxDelayBetweenTweetingMinutes = Integer.parseInt(prop.getProperty("maxDelayBetweenTweetingMinutes"));
 
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -274,7 +276,7 @@ public class Main
 				System.out.println();
 			}
 			
-			randomTime = (long) (Math.random()*1000*60*120);
+			randomTime = (long) (Math.random()*1000*60*maxDelayBetweenTweetingMinutes);
 			System.out.println("Waiting "+randomTime/1000+" seconds ("+randomTime/1000/60+" minutes) before considering next tweet...");
 			delay(randomTime);
 		}
