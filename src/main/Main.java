@@ -67,12 +67,18 @@ public class Main
 				}
 			}
 			
-			System.out.println("Learning from searching Twitter...");
+			System.out.println("Clearing list of all previous tweets...");
+			
+			allTweets.clear();
+			
+			System.out.println("Creating new Markov change engine...");
 			
 			megahal = new JMegaHal();
-			
+				
 			if (learnFromTrends)
 			{
+				System.out.println("Retrieving Twitter trends from WOEID: "+trendsWOEID+"...");
+				
 				try 
 				{
 					trendsResponses = twitter.getPlaceTrends(trendsWOEID); // 1 = Worldwide/global, 23424975 = UK, for others, look up 'WOEID'
@@ -87,6 +93,8 @@ public class Main
 				}
 				
 				Trend[] trends = trendsResponses.getTrends();
+				
+				System.out.println("Learning from "+trends.length+" Twitter trends...");
 				
 				for (Trend trend : trends) 
 				{
@@ -147,6 +155,7 @@ public class Main
 				}
 			}
 			
+			System.out.println("Learning from "+interests.size()+" specified interests...");
 			
 			for (String interest : interests) 
 			{
@@ -164,9 +173,7 @@ public class Main
 					continue;
 				}
 			}
-			
-			System.out.println();
-			
+						
 			System.out.println("Loading exclusions from exclusions.txt...");
 			
 			ArrayList<String> exclusions = new ArrayList<String>();
