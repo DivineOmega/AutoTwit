@@ -1,11 +1,14 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.jibble.jmegahal.JMegaHal;
 
@@ -25,6 +28,7 @@ public class Main
 	static ArrayList<String> allTweets = new ArrayList<String>();
 	
 	private static boolean learnFromTrends = true;
+	private static int trendsWOEID = 1;
 
 	public static void main(String[] args)
 	{
@@ -35,9 +39,34 @@ public class Main
 		long randomTime;
 		Date date = new Date();
 		BufferedReader br = null;
+		Properties prop = new Properties();
+		InputStream input = null;
 		
 		while (true)
 		{
+			System.out.println("Loading configuration from autotwit.properties...");
+			
+			try {
+
+				input = new FileInputStream("autotwit.properties");
+
+				prop.load(input);
+
+				learnFromTrends = (prop.getProperty("learnFromTrends").equalsIgnoreCase("true"));
+				trendsWOEID = Integer.parseInt(prop.getProperty("trendsWOEID"));
+
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				if (input != null) {
+					try {
+						input.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
 			System.out.println("Learning from searching Twitter...");
 			
 			megahal = new JMegaHal();
@@ -46,7 +75,7 @@ public class Main
 			{
 				try 
 				{
-					trendsResponses = twitter.getPlaceTrends(23424975); // 1 = Worldwide/global, 23424975 = UK, for others, look up 'WOEID'
+					trendsResponses = twitter.getPlaceTrends(trendsWOEID); // 1 = Worldwide/global, 23424975 = UK, for others, look up 'WOEID'
 				} 
 				catch (TwitterException e) 
 				{
@@ -76,6 +105,8 @@ public class Main
 					}
 				}
 			}
+			
+			System.out.println("Loading interests from interests.txt...");
 			
 			ArrayList<String> interests = new ArrayList<String>();
 			
@@ -136,6 +167,8 @@ public class Main
 			
 			System.out.println();
 			
+			System.out.println("Loading exclusions from exclusions.txt...");
+			
 			ArrayList<String> exclusions = new ArrayList<String>();
 			
 			try 
@@ -174,6 +207,8 @@ public class Main
 					ex.printStackTrace();
 				}
 			}
+			
+			System.out.println("Generating new tweet...");
 			
 			x = 0;
 			sentence = null;
