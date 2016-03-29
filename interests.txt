@@ -1,16 +1,8 @@
-Bitcoin
-#netsec
-@SwiftOnSecurity
-#gamedev
 @DivineOmega
-@ojdon
-@KirstyGasston
-@timlees11
-@peterchiuy
 #webdev
-PHP
-Mario Maker
-Star Trek
-#staffswebmeetup
-#Humans
+#ai
+#netsec
+#bitcoin
+#gamedev
 #homeautomation
+#opensource
