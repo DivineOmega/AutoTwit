@@ -1,6 +1,13 @@
 # Prevent Twitter API credentials being versioned
 twitter4j.properties
 
+# Prevent main AutoTwit configuration file being versioned
+autotwit.properties
+
+# Prevent interests and exclusions files being veresions
+interests.txt
+exclusions.txt
+
 # Java
 *.class
 
