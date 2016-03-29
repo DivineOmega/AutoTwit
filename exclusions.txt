@@ -16,3 +16,7 @@ murder
 shoot
 shot
 missing
+hostile
+passed away
+R.I.P
+RIP
