@@ -49,8 +49,9 @@ public class Main
 		Properties prop = new Properties();
 		InputStream input = null;
 		
-		DirectMessagesHandler directMessageHandler = new DirectMessagesHandler();
-		directMessageHandler.start();
+		StreamHandler streamHandler = new StreamHandler();
+		streamHandler.start();
+		
 		
 		while (true)
 		{
@@ -289,6 +290,7 @@ public class Main
 			System.out.println("Waiting "+randomTime/1000+" seconds ("+randomTime/1000/60+" minutes) before considering next tweet...");
 			delay(randomTime);
 		}
+		
 	}
 
 	private static void learnFromSearchQuery(String queryString) throws TwitterException 
