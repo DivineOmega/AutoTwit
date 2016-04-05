@@ -10,6 +10,7 @@ import twitter4j.QueryResult;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
@@ -49,6 +50,19 @@ public void run() {
 					
 					// Don't tweet in response to my own tweets.
 					if (status.getUser().getScreenName().equals(Main.twitter.getScreenName())) {
+						return;
+					}
+					
+					// Am I mentioned in this tweet?
+					boolean mentionedInTweet = false;
+					for (UserMentionEntity userMentionEntity : status.getUserMentionEntities()) {
+				    	if (userMentionEntity.getScreenName().equals(Main.twitter.getScreenName())) {
+				    		mentionedInTweet = true;
+				    		break;
+				    	}
+					}
+					
+					if (!mentionedInTweet) {
 						return;
 					}
 					
@@ -109,7 +123,10 @@ public void run() {
 				    
 				    toSend = userMentionString + toSend;
 				    
-				    Main.twitter.updateStatus(toSend);
+				    StatusUpdate statusUpdate = new StatusUpdate(toSend);
+				    statusUpdate.setInReplyToStatusId(status.getId());
+				    
+				    Main.twitter.updateStatus(statusUpdate);
 					
 				} catch (TwitterException e) {
 					e.printStackTrace();
