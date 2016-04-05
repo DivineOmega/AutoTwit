@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -106,7 +108,11 @@ public class Main
 				
 				Trend[] trends = trendsResponses.getTrends();
 				
-				System.out.println("Learning from "+trends.length+" Twitter trends...");
+				Collections.shuffle(Arrays.asList(trends));
+				
+				System.out.println("Learning from Twitter trends...");
+				
+				int trendsLearntFrom = 0;
 				
 				for (Trend trend : trends) 
 				{
@@ -123,13 +129,19 @@ public class Main
 						delay(1000*60*5);
 						continue;
 					}
+					
+					trendsLearntFrom++;
+					
+					if (trendsLearntFrom >= 10) {
+						break;
+					}
 				}
 			}
 			
 			System.out.println("Loading interests from interests.txt...");
 			
 			ArrayList<String> interests = new ArrayList<String>();
-			
+				
 			try 
 			{
 
@@ -167,7 +179,11 @@ public class Main
 				}
 			}
 			
-			System.out.println("Learning from "+interests.size()+" specified interests...");
+			System.out.println("Learning from specified interests...");
+			
+			Collections.shuffle(interests);
+			
+			int interestsLearntFrom = 0;
 			
 			for (String interest : interests) 
 			{
@@ -183,6 +199,12 @@ public class Main
 					System.out.println("Waiting for 5 minutes before trying again...");
 					delay(1000*60*5);
 					continue;
+				}
+				
+				interestsLearntFrom++;
+				
+				if (interestsLearntFrom >= 10) {
+					break;
 				}
 			}
 						
