@@ -12,14 +12,20 @@ import java.util.Properties;
 
 import org.jibble.jmegahal.JMegaHal;
 
+import twitter4j.AsyncTwitter;
+import twitter4j.AsyncTwitterFactory;
+import twitter4j.DirectMessage;
 import twitter4j.Query;
 import twitter4j.QueryResult;
+import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.Trend;
 import twitter4j.Trends;
 import twitter4j.Twitter;
+import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.TwitterListener;
 
 public class Main 
 {
@@ -42,6 +48,9 @@ public class Main
 		BufferedReader br = null;
 		Properties prop = new Properties();
 		InputStream input = null;
+		
+		DirectMessagesHandler directMessageHandler = new DirectMessagesHandler();
+		directMessageHandler.start();
 		
 		while (true)
 		{
@@ -302,7 +311,7 @@ public class Main
 		System.out.println();
 	}
 	
-	private static void delay (long milliseconds)
+	static void delay (long milliseconds)
 	{
 		try 
 		{
