@@ -98,7 +98,7 @@ public void run() {
 				    
 				    int x = 0;
 				    
-				    while (toSend.isEmpty() || toSend.length() > maxLength || toSend.contains("RT") || toSend.contains("@")) {
+				    while (toSend.isEmpty() || toSend.length() > maxLength || toSend.startsWith("RT ") || toSend.contains("@")) {
 				    	toSend = megahal.getSentence();
 				    	x++;
 				    	
@@ -176,7 +176,7 @@ public void run() {
 				    
 				    int x = 0;
 				    
-				    while (toSend.isEmpty() || toSend.contains("RT") || toSend.contains("@")) {
+				    while (toSend.isEmpty() || toSend.startsWith("RT ") || toSend.contains("@")) {
 				    	toSend = megahal.getSentence();
 				    	x++;
 				    	
