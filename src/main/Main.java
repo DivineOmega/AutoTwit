@@ -240,7 +240,9 @@ public class Main
 				
 				sentenceLower = sentence.toLowerCase();
 				
-				if (allTweets.contains(sentence) || sentence.length()>140 || sentenceLower.contains("…") || sentenceLower.contains("\r") || sentenceLower.contains("\n")) continue;
+				if (allTweets.contains(sentence) || sentence.length()>140 || sentenceLower.contains("…") 
+						|| sentenceLower.contains("\r") || sentenceLower.contains("\n") 
+						|| sentenceLower.startsWith("rt ")) continue;
 
 				boolean sentenceContainsExclusion = false; 
 				
