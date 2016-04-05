@@ -132,7 +132,7 @@ public class Main
 					
 					trendsLearntFrom++;
 					
-					if (trendsLearntFrom >= 10) {
+					if (trendsLearntFrom > 10) {
 						break;
 					}
 				}
@@ -203,7 +203,7 @@ public class Main
 				
 				interestsLearntFrom++;
 				
-				if (interestsLearntFrom >= 10) {
+				if (interestsLearntFrom > 10) {
 					break;
 				}
 			}
