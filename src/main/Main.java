@@ -215,44 +215,7 @@ public class Main
 						
 			System.out.println("Loading exclusions from exclusions.txt...");
 			
-			ArrayList<String> exclusions = new ArrayList<String>();
-			
-			try 
-			{
-
-				String currentLine;
-
-				br = new BufferedReader(new FileReader("exclusions.txt"));
-
-				while ((currentLine = br.readLine()) != null) 
-				{
-					currentLine = currentLine.trim();
-					
-					if (!currentLine.isEmpty())
-					{
-						exclusions.add(currentLine);
-					}
-				}
-
-			} 
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-			} 
-			finally 
-			{
-				try 
-				{
-					if (br != null)
-					{
-						br.close();
-					}
-				} 
-				catch (IOException ex) 
-				{
-					ex.printStackTrace();
-				}
-			}
+			ArrayList<String> exclusions = loadExclusions();
 			
 			System.out.println("Generating new tweet...");
 			
@@ -320,6 +283,52 @@ public class Main
 			delay(randomTime);
 		}
 		
+	}
+
+	static ArrayList<String> loadExclusions() {
+		
+		BufferedReader br = null;
+		
+		ArrayList<String> exclusions = new ArrayList<String>();
+		
+		try 
+		{
+
+			String currentLine;
+
+			br = new BufferedReader(new FileReader("exclusions.txt"));
+
+			while ((currentLine = br.readLine()) != null) 
+			{
+				currentLine = currentLine.trim();
+				
+				if (!currentLine.isEmpty())
+				{
+					exclusions.add(currentLine);
+				}
+			}
+
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try 
+			{
+				if (br != null)
+				{
+					br.close();
+				}
+			} 
+			catch (IOException ex) 
+			{
+				ex.printStackTrace();
+			}
+		}
+		
+		return exclusions;
 	}
 
 	private static void learnFromSearchQuery(String queryString) throws TwitterException 

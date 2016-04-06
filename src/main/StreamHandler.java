@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jibble.jmegahal.JMegaHal;
@@ -112,12 +113,28 @@ public void run() {
 				    
 				    int maxLength = 140 - userMentionString.length();
 				    				    
-				    String toSend = megahal.getSentence();
+				    String toSend = "";
+				    
+				    ArrayList<String> exclusions = Main.loadExclusions();
 				    
 				    int x = 0;
 				    
-				    while (toSend.isEmpty() || toSend.length() > maxLength || toSend.startsWith("RT ") || toSend.contains("@")) {
+				    boolean sentenceContainsExclusion = false;
+				    
+					while (toSend.isEmpty() || toSend.length() > maxLength || toSend.startsWith("RT ") 
+				    		|| toSend.contains("@") || sentenceContainsExclusion) {
+				    	
 				    	toSend = megahal.getSentence();
+				    	
+				    	for (String exclusion : exclusions) 
+						{
+							if (toSend.toLowerCase().contains(exclusion.toLowerCase()))
+							{
+								sentenceContainsExclusion = true;
+								break;
+							}
+						}
+				    	
 				    	x++;
 				    	
 				    	if (x>1000) {
@@ -197,17 +214,34 @@ public void run() {
 				    	megahal.add(tweet.getText());
 					}
 				    
-				    String toSend = megahal.getSentence();
+				    int maxLength = 140;
+				    
+				    String toSend = "";
+				    
+				    ArrayList<String> exclusions = Main.loadExclusions();
 				    
 				    int x = 0;
 				    
-				    while (toSend.isEmpty() || toSend.startsWith("RT ") || toSend.contains("@")) {
-				    	toSend = megahal.getSentence();
-				    	x++;
+				    boolean sentenceContainsExclusion = false;
+				    
+					while (toSend.isEmpty() || toSend.length() > maxLength || toSend.startsWith("RT ") 
+				    		|| toSend.contains("@") || sentenceContainsExclusion) {
+				    	
+						toSend = megahal.getSentence();
+						
+						x++;
+				    	
+						for (String exclusion : exclusions) 
+						{
+							if (toSend.toLowerCase().contains(exclusion.toLowerCase()))
+							{
+								sentenceContainsExclusion = true;
+								break;
+							}
+						}
 				    	
 				    	if (x>1000) {
-				    		toSend = "...";
-				    		break;
+				    		return;
 				    	}
 				    }
 				    
