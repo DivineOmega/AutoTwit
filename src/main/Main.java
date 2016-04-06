@@ -19,6 +19,7 @@ import twitter4j.AsyncTwitterFactory;
 import twitter4j.DirectMessage;
 import twitter4j.Query;
 import twitter4j.QueryResult;
+import twitter4j.RateLimitStatus;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.Trend;
@@ -93,6 +94,8 @@ public class Main
 			{
 				System.out.println("Retrieving Twitter trends from WOEID: "+trendsWOEID+"...");
 				
+				TrendsRateLimitUtils.waitIfNeeded();
+				
 				try 
 				{
 					trendsResponses = twitter.getPlaceTrends(trendsWOEID); // 1 = Worldwide/global, 23424975 = UK, for others, look up 'WOEID'
@@ -105,6 +108,8 @@ public class Main
 					delay(1000*60*5);
 					continue;
 				}
+				
+				TrendsRateLimitUtils.setRateLimit(trendsResponses.getRateLimitStatus());
 				
 				Trend[] trends = trendsResponses.getTrends();
 				
@@ -320,7 +325,12 @@ public class Main
 	private static void learnFromSearchQuery(String queryString) throws TwitterException 
 	{
 		System.out.print("Searching for '"+queryString+"'... ");
+		
+		SearchRateLimitUtils.waitIfNeeded();
+		
 		QueryResult queryResult = twitter.search(new Query(queryString).lang("en"));
+		
+		SearchRateLimitUtils.setRateLimit(queryResult.getRateLimitStatus());
 		
 		System.out.print("Getting Tweets... ");
 		List<Status> tweets = queryResult.getTweets();

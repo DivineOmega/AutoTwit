@@ -86,8 +86,12 @@ public void run() {
 					    }
 					    i--;
 					}
+					
+					SearchRateLimitUtils.waitIfNeeded();
 					    
-				    QueryResult queryResult = Main.twitter.search(new Query(searchQuery));
+				    QueryResult queryResult = Main.twitter.search(new Query(searchQuery).lang("en"));
+				    
+					SearchRateLimitUtils.setRateLimit(queryResult.getRateLimitStatus());
 				    
 				    List<Status> tweets = queryResult.getTweets();
 				    
@@ -178,8 +182,12 @@ public void run() {
 					    }
 					    i--;
 					}
+					
+					SearchRateLimitUtils.waitIfNeeded();
 					    
-				    QueryResult queryResult = Main.twitter.search(new Query(searchQuery));
+				    QueryResult queryResult = Main.twitter.search(new Query(searchQuery).lang("en"));
+				    
+				    SearchRateLimitUtils.setRateLimit(queryResult.getRateLimitStatus());
 				    
 				    List<Status> tweets = queryResult.getTweets();
 				    
