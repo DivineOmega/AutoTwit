@@ -214,7 +214,7 @@ public void run() {
 				    	megahal.add(tweet.getText());
 					}
 				    
-				    int maxLength = 140;
+				    int maxLength = 1000;
 				    
 				    String toSend = "";
 				    
