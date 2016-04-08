@@ -49,6 +49,11 @@ public void run() {
 				
 				try {
 					
+					// Don't do anything with retweets
+					if (status.isRetweet()) {
+						return;
+					}
+					
 					// Don't tweet in response to my own tweets.
 					if (status.getUser().getScreenName().equals(Main.twitter.getScreenName())) {
 						return;
