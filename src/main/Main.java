@@ -232,7 +232,7 @@ public class Main
 				
 				if (allTweets.contains(sentence) || sentence.length()>140 || sentenceLower.contains("…") 
 						|| sentenceLower.contains("\r") || sentenceLower.contains("\n") 
-						|| sentenceLower.startsWith("rt ")) continue;
+						|| sentenceLower.contains("@") || sentenceLower.startsWith("rt ")) continue;
 
 				boolean sentenceContainsExclusion = false; 
 				
