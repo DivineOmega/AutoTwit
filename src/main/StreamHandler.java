@@ -76,7 +76,7 @@ public void run() {
 					
 					String searchQuery = "";
 					
-					int i = 6;
+					int i = 8;
 					
 					while (searchQuery.isEmpty()) {
 					    for (String word : words) {
@@ -94,7 +94,7 @@ public void run() {
 					}
 					
 					SearchRateLimitUtils.waitIfNeeded();
-					    
+										    
 				    QueryResult queryResult = Main.twitter.search(new Query(searchQuery).lang("en"));
 				    
 					SearchRateLimitUtils.setRateLimit(queryResult.getRateLimitStatus());
@@ -193,7 +193,7 @@ public void run() {
 					
 					String searchQuery = "";
 					
-					int i = 6;
+					int i = 8;
 					
 					while (searchQuery.isEmpty()) {
 					    for (String word : words) {
