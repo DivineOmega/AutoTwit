@@ -18,6 +18,7 @@ import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 import twitter4j.DirectMessage;
 import twitter4j.Query;
+import twitter4j.Query.ResultType;
 import twitter4j.QueryResult;
 import twitter4j.RateLimitStatus;
 import twitter4j.ResponseList;
@@ -44,7 +45,7 @@ public class Main
 	{
 		Trends trendsResponses = null;
 		int x;
-		int maxTweetGenerationAttempts = 10000;
+		int maxTweetGenerationAttempts = 100000;
 		String sentence, sentenceLower;
 		long randomTime;
 		Date date = new Date();
@@ -52,8 +53,8 @@ public class Main
 		Properties prop = new Properties();
 		InputStream input = null;
 		
-		StreamHandler streamHandler = new StreamHandler();
-		streamHandler.start();
+//		StreamHandler streamHandler = new StreamHandler();
+//		streamHandler.start();
 		
 		
 		while (true)
@@ -230,8 +231,7 @@ public class Main
 				
 				sentenceLower = sentence.toLowerCase();
 				
-				if (allTweets.contains(sentence) || sentence.length()>140 || sentenceLower.contains("…") 
-						|| sentenceLower.contains("\r") || sentenceLower.contains("\n") 
+				if (allTweets.contains(sentence) || sentence.length()>280 || sentenceLower.contains("…") 
 						|| sentenceLower.startsWith("rt ")) continue;
 
 				boolean sentenceContainsExclusion = false; 
@@ -337,7 +337,7 @@ public class Main
 		
 		SearchRateLimitUtils.waitIfNeeded();
 		
-		QueryResult queryResult = twitter.search(new Query(queryString).lang("en"));
+		QueryResult queryResult = twitter.search(new Query(queryString).lang("en").count(100).resultType(ResultType.recent));
 		
 		SearchRateLimitUtils.setRateLimit(queryResult.getRateLimitStatus());
 		
